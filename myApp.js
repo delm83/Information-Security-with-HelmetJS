@@ -33,7 +33,16 @@ By default, directives are wide open, so it’s important to set the defaultSrc 
 In this exercise, use helmet.contentSecurityPolicy(). Configure it by adding a directives object. In the object, set the defaultSrc to ["'self'"] (the list of allowed sources must be in an array), in order to trust only your website address by default. Also set the scriptSrc directive so that you only allow scripts to be downloaded from your website ('self'), and from the domain 'trusted-cdn.com'.
 Hint: in the 'self' keyword, the single quotes are part of the keyword itself, so it needs to be enclosed in double quotes to be working.*/
 app.use(helmet.contentSecurityPolicy({"directives": {"defaultSrc": ["'self'"], "script-src": ["'self'", 'trusted-cdn.com']}}))
-
+/*The Referrer-Policy HTTP header controls how much referrer information (sent with the Referer header) should be included with requests. Aside from the HTTP header, you can set this policy in HTML.
+policy options are: Referrer-Policy: no-referrer, 
+Referrer-Policy: no-referrer-when-downgrade
+Referrer-Policy: origin
+Referrer-Policy: origin-when-cross-origin
+Referrer-Policy: same-origin
+Referrer-Policy: strict-origin
+Referrer-Policy: strict-origin-when-cross-origin
+Referrer-Policy: unsafe-url */
+app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
 /*app.use(helmet()) will automatically include all the middleware introduced above, except noCache(), and contentSecurityPolicy(), but these can be enabled if necessary. You can also disable or configure any other middleware individually, using a configuration object.
 We introduced each middleware separately for teaching purposes and for ease of testing. Using the ‘parent’ helmet() middleware is easy to implement in a real project.*/
